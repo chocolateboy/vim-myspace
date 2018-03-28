@@ -14,12 +14,19 @@ if !exists('g:myspace')
     let g:myspace = {}
 endif
 
+" expand or contract the supplied space prefix, mapping multiples of `from` spaces
+" to the corresponding number of `to` spaces
 function s:MySpace_replace(match, from, to)
     let quotient = strlen(a:match) / a:from
     let remainder = strlen(a:match) % a:from
     return repeat(' ', a:to * quotient + remainder)
 endfunction
 
+" signature: language: string → [registered: boolean, from: integer, to: integer]
+"
+" given a language, return a [boolean, from, to] triple.
+" if no mapping is registered for the language, the boolean is false.
+" otherwise, it's true and `from` and `to` are set to their configured values.
 function s:MySpace_lookup(lang)
     for key in keys(g:myspace)
         let spec = g:myspace[key]
@@ -34,7 +41,7 @@ function s:MySpace_lookup(lang)
             echohl WarningMsg
             echomsg 'vim-myspace: invalid spec for '
                 \ . string(key)
-                \ . ': expected [ from: int >= 0, to: int >= 0 ], got: ' . string(spec)
+                \ . ': expected [from: int >= 0, to: int >= 0], got: ' . string(spec)
             echohl None
         end
     endfor
@@ -43,8 +50,8 @@ function s:MySpace_lookup(lang)
 endfunction
 
 " after loading a file, rewrite the community standard to our preferred spacing
-function s:MySpaceImport()
-    let [ match, from, to ] = s:MySpace_lookup(&filetype)
+function s:MySpaceAfterLoad()
+    let [match, from, to] = s:MySpace_lookup(&filetype)
 
     if match
         let save_view = winsaveview()
@@ -54,8 +61,8 @@ function s:MySpaceImport()
 endfunction
 
 " before saving a file, rewrite our spacing to the community standard
-function s:MySpacePreExport()
-    let [ match, from, to ] = s:MySpace_lookup(&filetype)
+function s:MySpaceBeforeSave()
+    let [match, from, to] = s:MySpace_lookup(&filetype)
 
     if match
         let save_view = winsaveview()
@@ -66,8 +73,8 @@ endfunction
 
 " after saving a file, undo the substitution so it doesn't
 " clutter the user's undo stack
-function s:MySpacePostExport()
-    let [ match, from, to ] = s:MySpace_lookup(&filetype)
+function s:MySpaceAfterSave()
+    let [match, from, to] = s:MySpace_lookup(&filetype)
 
     if match
         let save_view = winsaveview()
@@ -78,7 +85,7 @@ endfunction
 
 augroup MySpace
     au!
-    au BufReadPost  * call s:MySpaceImport()
-    au BufWritePre  * call s:MySpacePreExport()
-    au BufWritePost * call s:MySpacePostExport()
+    au BufReadPost  * call s:MySpaceAfterLoad()
+    au BufWritePre  * call s:MySpaceBeforeSave()
+    au BufWritePost * call s:MySpaceAfterSave()
 augroup END

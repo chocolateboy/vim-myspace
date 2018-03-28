@@ -12,7 +12,8 @@ Four spaces good, two spaces bad!
   - [Vundle](#vundle)
 - [DESCRIPTION](#description)
   - [Why?](#why)
-- [CONFIG](#config)
+- [SETTINGS](#settings)
+  - [g:myspace_filetypes](#gmyspace_filetypes)
 - [CAVEATS](#caveats)
   - [Preformatted Sections](#preformatted-sections)
     - [before](#before)
@@ -26,35 +27,34 @@ Four spaces good, two spaces bad!
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## SYNOPSIS
+# SYNOPSIS
 
 ```vim
-" display/edit these 2-spaced filetypes with 4 spaces (my preference), but save them
-" with 2 spaces (community standard)
+" safely display and edit these 2-spaced filetypes (community standard) with 4 spaces (my preference)
 let g:myspace_filetypes = { 'coffee|crystal|ruby|scala|swift': [ 2, 4 ] }
 ```
 
-## INSTALL
+# INSTALL
 
-### [Pathogen](https://github.com/tpope/vim-pathogen)
+## [Pathogen](https://github.com/tpope/vim-pathogen)
 
     $ git clone https://github.com/chocolateboy/vim-myspace ~/.vim/bundle/vim-myspace
 
-### [vim-plug](https://github.com/junegunn/vim-plug)
+## [vim-plug](https://github.com/junegunn/vim-plug)
 
 Add `Plug 'chocolateboy/vim-myspace'` to your `~/.vimrc` and run `PlugInstall`.
 
-### [Vundle](https://github.com/gmarik/Vundle.vim)
+## [Vundle](https://github.com/gmarik/Vundle.vim)
 
 Add `Plugin 'chocolateboy/vim-myspace'` to your `~/.vimrc` and run `PluginInstall`.
 
-## DESCRIPTION
+# DESCRIPTION
 
 vim-myspace is a vim plugin which allows files to be edited and viewed with your preferred
-indentation level (e.g. 4 spaces) but transparently saved with the default/community-standard
-indentation level (e.g. 2 spaces).
+indentation style (e.g. 4 spaces) but transparently saved with the default/community-standard
+style (e.g. 2 spaces).
 
-### Why?
+## Why?
 
 I find 2 spaces cramped and painful to read, but the community has settled on this standard for
 various languages, including:
@@ -64,20 +64,21 @@ various languages, including:
 * Ruby
 * Scala
 * Swift
+* YAML
 
 Rather than fruitlessly attempting to overthrow the status quo, this plugin allows you to
 view and edit files in your preferred style, while saving and shipping them in the style
 stipulated by a project, workplace, community &c.
 
-## CONFIG
+# SETTINGS
 
-Currently, the only setting is `g:myspace_filetypes`, which should be assigned a dictionary whose
-keys are filetypes and whose values are dictionaries of options.
+## g:myspace_filetypes
 
-Indentations spanning multiples of `from` spaces are translated to corresponding
-multiples of `to` spaces.
+The plugin is enabled by assigning a dictionary to this variable whose keys are
+filetypes (strings) and whose values are `from` -> `to` pairs (arrays). Indentations
+spanning multiple `from` spaces are translated to the corresponding number of `to` spaces.
 
-The filetypes → [ from, to ] mapping can be specified individually e.g.:
+The mapping from filetypes to `[from, to]` pairs can be specified individually e.g.:
 
 ```vim
 let g:myspace_filetypes = {
@@ -99,7 +100,7 @@ let g:myspace_filetypes = {
     \ }
 ```
 
-## CAVEATS
+# CAVEATS
 
 The plugin only operates on lines that begin with spaces. Lines that begin with tabs are unaffected.
 Lines that begin with spaces followed by one or more tabs are only transformed up to the tab(s).
@@ -114,12 +115,12 @@ set shiftwidth=4
 set noexpandtab
 ```
 
-### Preformatted Sections
+## Preformatted Sections
 
 The transform may occasionally affect indentation on lines that are already correctly indented
 such as the bodies of multi-line comments or here-docs e.g.:
 
-#### before
+### before
 
 ```ruby
 code = <<EOS # four spaces
@@ -131,7 +132,7 @@ class Foo {
 EOS
 ```
 
-#### after
+### after
 
 ```ruby
 code = <<EOS # eight spaces
@@ -143,21 +144,25 @@ class Foo {
 EOS
 ```
 
-## FAQ
+# FAQ
 
-### I prefer 2 spaces. Can I use this plugin to view/edit 4-space files with 2 spaces?
+## I prefer 2 spaces. Can I use this plugin to view/edit 4-space files with 2 spaces?
 
-Yes and no. While well-formed indents can be correctly mapped in both directions e.g.:
+Yes and no. While well-formed indents can correctly be mapped in both directions e.g.:
 
-    0 ->  0
-    2 ->  4
-    4 ->  8
-    6 -> 12
+```
+ 0 ->  0
+ 2 ->  4
+ 4 ->  8
+ 6 -> 12
+```
 
-    0 ->  0
-    4 ->  2
-    8 ->  4
-   12 ->  6
+```
+ 0 ->  0
+ 4 ->  2
+ 8 ->  4
+12 ->  6
+```
 
 \- real-world code contains ill-formed indents i.e. 4-spaced files with lines that
 begin with, say, 6 spaces:
@@ -189,40 +194,39 @@ begin with, say, 6 spaces:
 Mapping 2 spaces to 4 spaces is reversible i.e. there is no loss of
 information about the original number of spaces when that number is doubled:
 
-    1 -> 2
-    2 -> 4
-    3 -> 6
-    4 -> 8
+```
+1 -> 2
+2 -> 4
+3 -> 6
+4 -> 8
+```
 
 However, *reducing* the number of spaces may be lossy i.e.:
 
-    1 -> ?
-    2 -> 1
-    3 -> ?
-    4 -> 2
+```
+1 -> ?
+2 -> 1
+3 -> ?
+4 -> 2
+```
 
-XXX seems to work OK with 4 -> 2
-
-XXX this may not be an issue if we ignore spaces < `from` e.g. in the above
-example, we leave 1, 2, 3
-
-## SEE ALSO
+# SEE ALSO
 
 * [AutoAdapt](http://www.vim.org/scripts/script.php?script_id=4654) - automatically update timestamps, copyright notices, etc.
 * [detectindent](https://github.com/ciaranm/detectindent) - vim script for automatically detecting indent settings
-* [GitHub: better-sized tabs in code](https://userstyles.org/styles/70979/github-better-sized-tabs-in-code)
+* [GitHub: better-sized tabs in code](https://userstyles.org/styles/70979/github-better-sized-tabs-in-code) - a userstyle which displays tabs on GitHub as 4 spaces rather than 8
 
-## VERSION
+# VERSION
 
 0.0.1
 
-## AUTHOR
+# AUTHOR
 
 [chocolateboy](mailto:chocolate@cpan.org)
 
-## COPYRIGHT AND LICENSE
+# COPYRIGHT AND LICENSE
 
-Copyright © 2016-2017 by chocolateboy
+Copyright © 2016-2018 by chocolateboy
 
 vim-myspace is free software; you can redistribute it and/or modify it under the
 terms of the [Artistic License 2.0](http://www.opensource.org/licenses/artistic-license-2.0.php).
