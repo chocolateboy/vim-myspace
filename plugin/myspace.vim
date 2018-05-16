@@ -4,6 +4,7 @@
 " see: http://stackoverflow.com/a/23650554
 " see also: AutoAdapt: http://www.vim.org/scripts/script.php?script_id=4654
 " TODO allow per-project settings to set/override the filetype mappings
+" TODO add tests
 
 if exists('g:myspace_loaded')
     finish
@@ -71,7 +72,7 @@ endfunction
 
 " before saving a file, rewrite our spacing to the community standard
 " XXX this (and MySpaceAfterSave) still runs even if the target filetype
-" is different e.g.  saving test.rb as test.txt
+" is different e.g. saving test.rb as test.txt
 function s:MySpaceBeforeSave()
     if exists('b:myspace_roundtrip') && b:myspace_roundtrip == v:false
         return

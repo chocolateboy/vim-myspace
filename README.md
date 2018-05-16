@@ -6,7 +6,7 @@ Four spaces good, two spaces bad!
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [NAME](#name)
-- [INSTALL](#install)
+- [INSTALLATION](#installation)
   - [Pathogen](#pathogen)
   - [vim-plug](#vim-plug)
   - [Vundle](#vundle)
@@ -32,7 +32,7 @@ Four spaces good, two spaces bad!
 
 vim-myspace - safely view and edit files with your preferred spacing style
 
-# INSTALL
+# INSTALLATION
 
 ## [Pathogen](https://github.com/tpope/vim-pathogen)
 
@@ -50,7 +50,7 @@ Add `Plugin 'chocolateboy/vim-myspace'` to your `~/.vimrc` and run `PluginInstal
 
 ```vim
 " safely view and edit these 2-spaced filetypes (community standard) with 4 spaces (my preference)
-let g:myspace_filetypes = { 'coffee|crystal|ruby|scala|swift': [2, 4] }
+let g:myspace_filetypes = { 'crystal|ruby|scala|swift': [2, 4] }
 ```
 
 # DESCRIPTION
@@ -64,7 +64,6 @@ style (e.g. 2 spaces).
 I find 2 spaces cramped and painful to read, but the community has settled on this standard for
 various languages, including:
 
-* CoffeeScript
 * Crystal
 * Ruby
 * Scala
@@ -73,7 +72,7 @@ various languages, including:
 
 Rather than fruitlessly attempting to overthrow the status quo, this plugin allows you to
 view and edit files in your preferred style, while saving and shipping them in the style
-stipulated by a project, workplace, community &c.
+stipulated by a project, workplace, community etc.
 
 # SETTINGS
 
@@ -87,7 +86,6 @@ The mapping from filetypes to from/to pairs can be specified individually e.g.:
 
 ```vim
 let g:myspace_filetypes = {
-     \ 'coffee':  [2, 4],
      \ 'crystal': [2, 4],
      \ 'ruby':    [2, 4],
      \ 'scala':   [2, 4],
@@ -100,8 +98,8 @@ a pipe character:
 
 ```vim
 let g:myspace_filetypes = {
-    \ 'coffee|crystal|ruby|scala|swift': [2, 4],
-    \ 'ada':                             [3, 4]
+    \ 'crystal|ruby|scala|swift': [2, 4],
+    \ 'ada':                      [3, 4]
     \ }
 ```
 
