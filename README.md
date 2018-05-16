@@ -5,11 +5,12 @@ Four spaces good, two spaces bad!
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [SYNOPSIS](#synopsis)
+- [NAME](#name)
 - [INSTALL](#install)
   - [Pathogen](#pathogen)
   - [vim-plug](#vim-plug)
   - [Vundle](#vundle)
+- [SYNOPSIS](#synopsis)
 - [DESCRIPTION](#description)
   - [Why?](#why)
 - [SETTINGS](#settings)
@@ -27,12 +28,9 @@ Four spaces good, two spaces bad!
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# SYNOPSIS
+# NAME
 
-```vim
-" safely display and edit these 2-spaced filetypes (community standard) with 4 spaces (my preference)
-let g:myspace_filetypes = { 'coffee|crystal|ruby|scala|swift': [ 2, 4 ] }
-```
+vim-myspace - safely view and edit files with your preferred spacing style
 
 # INSTALL
 
@@ -47,6 +45,13 @@ Add `Plug 'chocolateboy/vim-myspace'` to your `~/.vimrc` and run `PlugInstall`.
 ## [Vundle](https://github.com/gmarik/Vundle.vim)
 
 Add `Plugin 'chocolateboy/vim-myspace'` to your `~/.vimrc` and run `PluginInstall`.
+
+# SYNOPSIS
+
+```vim
+" safely view and edit these 2-spaced filetypes (community standard) with 4 spaces (my preference)
+let g:myspace_filetypes = { 'coffee|crystal|ruby|scala|swift': [2, 4] }
+```
 
 # DESCRIPTION
 
@@ -74,29 +79,29 @@ stipulated by a project, workplace, community &c.
 
 ## g:myspace_filetypes
 
-The plugin is enabled by assigning a dictionary to this variable whose keys are
+The plugin is enabled by assigning to this variable a dictionary whose keys are
 filetypes (strings) and whose values are `from` -> `to` pairs (arrays). Indentations
 spanning multiple `from` spaces are translated to the corresponding number of `to` spaces.
 
-The mapping from filetypes to `[from, to]` pairs can be specified individually e.g.:
+The mapping from filetypes to from/to pairs can be specified individually e.g.:
 
 ```vim
 let g:myspace_filetypes = {
-     \ 'coffee':  [ 2, 4 ],
-     \ 'crystal': [ 2, 4 ],
-     \ 'ruby':    [ 2, 4 ],
-     \ 'scala':   [ 2, 4 ],
-     \ 'swift':   [ 2, 4 ],
+     \ 'coffee':  [2, 4],
+     \ 'crystal': [2, 4],
+     \ 'ruby':    [2, 4],
+     \ 'scala':   [2, 4],
+     \ 'swift':   [2, 4],
      \ }
 ```
 
-Or, if multiple filetypes share the same rewrite rule, they can be specified together separated by
+Or, if multiple filetypes share the same rewrite rule, they can be specified together, separated by
 a pipe character:
 
 ```vim
 let g:myspace_filetypes = {
-    \ 'coffee|crystal|ruby|scala|swift': [ 2, 4 ],
-    \ 'ada':                             [ 3, 4 ]
+    \ 'coffee|crystal|ruby|scala|swift': [2, 4],
+    \ 'ada':                             [3, 4]
     \ }
 ```
 
@@ -118,7 +123,7 @@ set noexpandtab
 ## Preformatted Sections
 
 The transform may occasionally affect indentation on lines that are already correctly indented
-such as the bodies of multi-line comments or here-docs e.g.:
+such as the bodies of multi-line comments or heredocs e.g.:
 
 ### before
 
