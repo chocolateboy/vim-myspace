@@ -55,7 +55,7 @@ let g:myspace_filetypes = { 'crystal|ruby|scala|swift': [2, 4] }
 
 # DESCRIPTION
 
-vim-myspace is a vim plugin which allows files to be edited and viewed with your preferred
+vim-myspace is a vim plugin which allows files to be viewed and edited with your preferred
 indentation style (e.g. 4 spaces) but transparently saved with the default/community-standard
 style (e.g. 2 spaces).
 
@@ -82,7 +82,7 @@ The plugin is enabled by assigning to this variable a dictionary whose keys are
 filetypes (strings) and whose values are `from` -> `to` pairs (arrays). Indentations
 spanning multiple `from` spaces are translated to the corresponding number of `to` spaces.
 
-The mapping from filetypes to from/to pairs can be specified individually e.g.:
+The mapping from filetypes to `from`/`to` pairs can be specified individually e.g.:
 
 ```vim
 let g:myspace_filetypes = {
@@ -160,7 +160,7 @@ Yes and no. While well-formed indents can correctly be roundtripped e.g.:
 | 12   | 6  | 12   |
 | 16   | 8  | 16   |
 
-\- real-world code contains ill-formed indents i.e. 4-spaced files with lines that
+\- real-world code contains ill-formed indents e.g. 4-spaced files with lines that
 begin with, say, 6 spaces:
 
 ```cpp
