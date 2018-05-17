@@ -151,21 +151,14 @@ EOS
 
 ## I prefer 2 spaces. Can I use this plugin to view/edit 4-space files with 2 spaces?
 
-Yes and no. While well-formed indents can correctly be mapped in both directions e.g.:
+Yes and no. While well-formed indents can correctly be roundtripped e.g.:
 
-```
- 0 ->  0
- 2 ->  4
- 4 ->  8
- 6 -> 12
-```
-
-```
- 0 ->  0
- 4 ->  2
- 8 ->  4
-12 ->  6
-```
+| from | to | back |
+|-----:|---:|-----:|
+|  4   | 2  |  4   |
+|  8   | 4  |  8   |
+| 12   | 6  | 12   |
+| 16   | 8  | 16   |
 
 \- real-world code contains ill-formed indents i.e. 4-spaced files with lines that
 begin with, say, 6 spaces:
@@ -189,29 +182,22 @@ begin with, say, 6 spaces:
 ```
 
 ```cpp
-    /*******              // 0
-     * this is a comment  // 1
-     */                   // 1
+/*******              // 0
+ * this is a comment  // 1
+ */                   // 1
 ```
 
-Mapping 2 spaces to 4 spaces is reversible i.e. there is no loss of
-information about the original number of spaces when that number is doubled:
+Expansion is always reversible i.e. if `from` <= `to`, there is no loss of
+information about the original number of spaces when multiples of `from`
+are mapped to multiples of `to`. The same is not true in every case
+if `from` > `to` e.g.:
 
-```
-1 -> 2
-2 -> 4
-3 -> 6
-4 -> 8
-```
-
-However, *reducing* the number of spaces may be lossy i.e.:
-
-```
-1 -> ?
-2 -> 1
-3 -> ?
-4 -> 2
-```
+| from | to | back |
+|-----:|---:|-----:|
+| 2    | 2  | 4    |
+| 3    | 3  | 5    |
+| 6    | 4  | 8    |
+| 7    | 5  | 9    |
 
 # SEE ALSO
 
