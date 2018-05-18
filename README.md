@@ -14,7 +14,7 @@ Four spaces good, two spaces bad!
 - [DESCRIPTION](#description)
   - [Why?](#why)
 - [SETTINGS](#settings)
-  - [g:myspace_filetypes](#gmyspace_filetypes)
+  - [g:myspace_filetype](#gmyspace_filetype)
 - [CAVEATS](#caveats)
   - [Preformatted Sections](#preformatted-sections)
     - [before](#before)
@@ -50,7 +50,7 @@ Add `Plugin 'chocolateboy/vim-myspace'` to your `~/.vimrc` and run `PluginInstal
 
 ```vim
 " safely view and edit these 2-spaced filetypes (community standard) with 4 spaces (my preference)
-let g:myspace_filetypes = { 'crystal|ruby|scala|swift': [2, 4] }
+let g:myspace_filetype = { 'crystal|ruby|scala|swift': [2, 4] }
 ```
 
 # DESCRIPTION
@@ -76,7 +76,7 @@ stipulated by a project, workplace, community etc.
 
 # SETTINGS
 
-## g:myspace_filetypes
+## g:myspace_filetype
 
 The plugin is enabled by assigning to this variable a dictionary whose keys are
 filetypes (strings) and whose values are `from` -> `to` pairs (arrays). Indentations
@@ -85,7 +85,7 @@ spanning multiple `from` spaces are translated to the corresponding number of `t
 The mapping from filetypes to `from`/`to` pairs can be specified individually e.g.:
 
 ```vim
-let g:myspace_filetypes = {
+let g:myspace_filetype = {
      \ 'crystal': [2, 4],
      \ 'ruby':    [2, 4],
      \ 'scala':   [2, 4],
@@ -97,9 +97,9 @@ Or, if multiple filetypes share the same rewrite rule, they can be specified tog
 a pipe character:
 
 ```vim
-let g:myspace_filetypes = {
+let g:myspace_filetype = {
     \ 'crystal|ruby|scala|swift': [2, 4],
-    \ 'ada':                      [3, 4]
+    \ 'ada':                      [3, 4],
     \ }
 ```
 
