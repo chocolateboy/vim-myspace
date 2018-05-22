@@ -49,7 +49,8 @@ Add `Plugin 'chocolateboy/vim-myspace'` to your `~/.vimrc` and run `PluginInstal
 # SYNOPSIS
 
 ```vim
-" safely view and edit these 2-spaced filetypes (community standard) with 4 spaces (my preference)
+" safely view and edit these 2-spaced filetypes (community standard)
+" with 4 spaces (my preference)
 let g:myspace_filetype = { 'crystal|ruby|scala|swift': [2, 4] }
 ```
 
@@ -78,19 +79,28 @@ stipulated by a project, workplace, community etc.
 
 ## g:myspace_filetype
 
-The plugin is enabled by assigning to this variable a dictionary whose keys are
-filetypes (strings) and whose values are `from` -> `to` pairs (arrays). Indentations
-spanning multiple `from` spaces are translated to the corresponding number of `to` spaces.
+The plugin is enabled by assigning a dictionary of mappings to this variable in
+your `~/.vimrc`. The dictionary's keys are filetypes (strings) and its values
+are `from` → `to` pairs (arrays). Indentations spanning multiple `from` spaces
+are translated to the corresponding number of `to` spaces. Remainders are passed
+through unchanged in both directions, e.g. for 2 → 4:
+
+| from  | to    | back |
+| ----- | ----- | ---: |
+| 2     | 4     | 2    |
+| 3     | 5     | 3    |
+| 4     | 8     | 4    |
+| 5     | 9     | 5    |
 
 The mapping from filetypes to `from`/`to` pairs can be specified individually e.g.:
 
 ```vim
 let g:myspace_filetype = {
-     \ 'crystal': [2, 4],
-     \ 'ruby':    [2, 4],
-     \ 'scala':   [2, 4],
-     \ 'swift':   [2, 4],
-     \ }
+    \ 'crystal': [2, 4],
+    \ 'ruby':    [2, 4],
+    \ 'scala':   [2, 4],
+    \ 'swift':   [2, 4],
+    \ }
 ```
 
 Or, if multiple filetypes share the same rewrite rule, they can be specified together, separated by
@@ -151,14 +161,14 @@ EOS
 
 ## I prefer 2 spaces. Can I use this plugin to view/edit 4-space files with 2 spaces?
 
-Yes and no. While well-formed indents can correctly be roundtripped e.g.:
+Yes and no. While well-formed indents can correctly be roundtripped e.g. for 4 → 2:
 
-| from | to | back |
-|-----:|---:|-----:|
-|  4   | 2  |  4   |
-|  8   | 4  |  8   |
-| 12   | 6  | 12   |
-| 16   | 8  | 16   |
+| from   | to   | back   |
+| -----: | ---: | -----: |
+| 4      | 2    | 4      |
+| 8      | 4    | 8      |
+| 12     | 6    | 12     |
+| 16     | 8    | 16     |
 
 \- real-world code contains ill-formed indents e.g. 4-spaced files with lines that
 begin with, say, 6 spaces:
@@ -189,15 +199,15 @@ begin with, say, 6 spaces:
 
 Expansion is always reversible i.e. if `from` <= `to`, there is no loss of
 information about the original number of spaces when multiples of `from`
-are mapped to multiples of `to`. The same is not true in every case
-if `from` > `to` e.g.:
+are mapped to multiples of `to`. The same is not always true if `from` >
+`to` e.g. for 4 → 2:
 
-| from | to | back |
-|-----:|---:|-----:|
-| 2    | 2  | 4    |
-| 3    | 3  | 5    |
-| 6    | 4  | 8    |
-| 7    | 5  | 9    |
+| from   | to   | back   |
+| -----: | ---: | -----: |
+| 2      | 2    | 4      |
+| 3      | 3    | 5      |
+| 6      | 4    | 8      |
+| 7      | 5    | 9      |
 
 # SEE ALSO
 
