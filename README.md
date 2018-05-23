@@ -16,6 +16,8 @@ Four spaces good, two spaces bad!
 - [SETTINGS](#settings)
   - [g:myspace_filetype](#gmyspace_filetype)
 - [CAVEATS](#caveats)
+  - [Tabs](#tabs)
+  - [Auto-Indentation](#auto-indentation)
   - [Preformatted Sections](#preformatted-sections)
     - [before](#before)
     - [after](#after)
@@ -115,17 +117,22 @@ let g:myspace_filetype = {
 
 # CAVEATS
 
+## Tabs
+
 The plugin only operates on lines that begin with spaces. Lines that begin with tabs are unaffected.
 Lines that begin with spaces followed by one or more tabs are only transformed up to the tab(s).
 
+## Auto-Indentation
+
 You may need to tweak the indentation settings in your `~/.vimrc` to reflect your preferred style.
-Auto-indentation (i.e. while typing) works as expected for me with the following `~/.vimrc` settings:
+Automatic indentation (i.e. while typing) works as expected for me with the following `~/.vimrc` settings:
 
 ```vim
-set tabstop=8
-set softtabstop=4
-set shiftwidth=4
+set autoindent
 set noexpandtab
+set shiftwidth=4
+set softtabstop=4
+set tabstop=8
 ```
 
 ## Preformatted Sections
@@ -192,9 +199,9 @@ begin with, say, 6 spaces:
 ```
 
 ```cpp
-/*******              // 0
- * this is a comment  // 1
- */                   // 1
+    /*******              // 4
+     * this is a comment  // 5
+     */                   // 5
 ```
 
 Expansion is always reversible i.e. if `from` <= `to`, there is no loss of
