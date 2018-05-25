@@ -287,7 +287,7 @@ are mapped to multiples of `to`. The same is not always true if `from` >
 
 # VERSION
 
-0.0.2
+0.1.0
 
 # AUTHOR
 
