@@ -17,8 +17,8 @@ Four spaces good, two spaces bad!
   - [myspace_filetype](#myspace_filetype)
   - [myspace_disable](#myspace_disable)
 - [TIPS & TRICKS](#tips--tricks)
-  - [Auto-Indentation](#auto-indentation)
   - [Project-Specific Settings](#project-specific-settings)
+  - [Auto-Indentation](#auto-indentation)
 - [CAVEATS](#caveats)
   - [Tabs](#tabs)
   - [Preformatted Sections](#preformatted-sections)
@@ -82,16 +82,17 @@ stipulated by a project, workplace, community etc.
 ## myspace_filetype
 
 The plugin is configured by assigning a dictionary of mappings to `g:myspace_filetype`
-(global) or `b:myspace_filetype` (buffer-local) e.g. in `~/.vimrc`:
+(global) or `b:myspace_filetype` (buffer-local). If defined, the buffer-local mappings
+take precedence over the global mappings.
+
+> `~/.vimrc`
 
 ```vim
 let g:myspace_filetype = { 'crystal|ruby|scala|swift': [2, 4] }
 ```
 
-If defined, the buffer-local mappings take precedence over the global mappings.
-
 The dictionary's keys are filetypes (strings) and its values are either `from` → `to`
-pairs (arrays) or false (0) to disable rewriting for the type(s). Indentations spanning
+pairs (arrays), or false (0) to disable rewriting for the type(s). Indentations spanning
 multiple `from` spaces are translated to the corresponding number of `to` spaces.
 Remainders are passed through unchanged, e.g. for 2 → 4:
 
@@ -134,19 +135,6 @@ let b:myspace_disable = 1
 
 # TIPS & TRICKS
 
-## Auto-Indentation
-
-You may need to tweak the indentation settings in your `~/.vimrc` to reflect your preferred style.
-Automatic indentation (i.e. while typing) works as expected for me with the following `~/.vimrc` settings:
-
-```vim
-set autoindent
-set noexpandtab
-set shiftwidth=4
-set softtabstop=4
-set tabstop=8
-```
-
 ## Project-Specific Settings
 
 Indentation can be configured on a per-project basis by defining
@@ -179,7 +167,7 @@ which either:
 Since overrides are typically buffer-local, they can be sourced from
 a (shared) file without affecting the global settings e.g:
 
-> `~/.vim/local/myspace-js24.vim`
+> `~/.vim/local/indent-js-24.vim`
 
 ```bash
 let b:myspace_filetype = { 'javascript': [2, 4] }
@@ -188,7 +176,20 @@ let b:myspace_filetype = { 'javascript': [2, 4] }
 > `~/.vimrc`
 
 ```vim
-autocmd BufNewFile,BufRead ~/code/example/*.js source ~/.vim/local/myspace-js24.vim
+autocmd BufNewFile,BufRead ~/code/example/*.js source ~/.vim/local/indent-js-24.vim
+```
+
+## Auto-Indentation
+
+You may need to tweak the indentation settings in your `~/.vimrc` to reflect your preferred style.
+Automatic indentation (i.e. while typing) works as expected for me with the following `~/.vimrc` settings:
+
+```vim
+set autoindent
+set noexpandtab
+set shiftwidth=4
+set softtabstop=4
+set tabstop=8
 ```
 
 # CAVEATS
