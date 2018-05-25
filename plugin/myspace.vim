@@ -1,9 +1,6 @@
-" XXX doesn't ignore non-code (e.g. HEREDOCS)
 " XXX probably doesn't work with folds
 " TODO investigate removing the search pattern from history as per this SO answer:
 " see: http://stackoverflow.com/a/23650554
-" see also: AutoAdapt: http://www.vim.org/scripts/script.php?script_id=4654
-" TODO allow per-project settings to set/override the filetype mappings
 " TODO add tests
 
 if exists('g:myspace_loaded')
@@ -11,14 +8,22 @@ if exists('g:myspace_loaded')
 end
 
 let g:myspace_loaded = v:true
-" let b:myspace_roundtrip = v:true
-" let b:myspace_enable = v:true
 
 if !exists('g:myspace_filetype')
     let g:myspace_filetype = {}
 endif
 
-" expand or contract the supplied space prefix, mapping multiples of `from` spaces
+if !exists('g:myspace_disable')
+    let g:myspace_disable = v:false
+endif
+
+" return a truthy value if this plugin is disabled in the current buffer
+" or globally, or a falsey value otherwise
+function s:IsDisabled()
+    return exists('b:myspace_disable') ? b:myspace_disable : g:myspace_disable
+endfunction
+
+" expand or shrink the supplied space-prefix, mapping multiples of `from` spaces
 " to the corresponding number of `to` spaces
 function s:Replace(match, from, to)
     let quotient = strlen(a:match) / a:from
@@ -26,28 +31,34 @@ function s:Replace(match, from, to)
     return repeat(' ', a:to * quotient + remainder)
 endfunction
 
-" signature: language: string → [registered: boolean, from: integer, to: integer]
+" signature: filetype: string → [match: boolean, from: integer, to: integer]
 "
-" given a language, return a [boolean, from, to] triple.
-" if no mapping is registered for the language, the boolean is false.
-" otherwise, it's true and `from` and `to` are set to their configured values.
+" given a filetype, return a [match, from, to] triple. if no mapping is
+" registered for the filetype, `match` is false. otherwise, it's true
+" and `from` and `to` are set to their configured values.
 function s:Lookup(lang)
-    for key in keys(g:myspace_filetype)
-        let spec = g:myspace_filetype[key]
+    let specs = exists('b:myspace_filetype') ? b:myspace_filetype : g:myspace_filetype
 
-        if type(spec) == v:t_list && len(spec) == 2 && spec[0] > 0 && spec[1] > 0
-            let langs = split(key, '|')
+    for key in keys(specs)
+        let langs = split(key, '|')
 
-            if index(langs, a:lang) >= 0
+        if index(langs, a:lang) >= 0
+            let spec = specs[key]
+
+            if type(spec) == v:t_list && len(spec) == 2 && spec[0] > 0 && spec[1] > 0
                 return [v:true] + spec
             endif
-        else
-            echohl WarningMsg
-            echomsg 'vim-myspace: invalid spec for '
-                \ . string(key)
-                \ . ': expected [from: int >= 0, to: int >= 0], got: ' . string(spec)
-            echohl None
-        end
+
+            if spec != v:false
+                echohl WarningMsg
+                echomsg 'vim-myspace: invalid spec for '
+                    \ . string(key)
+                    \ . ': expected false (0) or [from: int > 0, to: int > 0], got: ' . string(spec)
+                echohl None
+            endif
+
+            break
+        endif
     endfor
 
     return [v:false, 0, 0]
@@ -55,9 +66,7 @@ endfunction
 
 " after loading a file, rewrite the community standard to our preferred spacing
 function s:MySpaceAfterLoad()
-    if exists('b:myspace_import') && b:myspace_import == v:false
-        return
-    elseif exists('b:myspace_disable') && b:myspace_disable == v:true
+    if s:IsDisabled()
         return
     endif
 
@@ -71,12 +80,8 @@ function s:MySpaceAfterLoad()
 endfunction
 
 " before saving a file, rewrite our spacing to the community standard
-" XXX this (and MySpaceAfterSave) still runs even if the target filetype
-" is different e.g. saving test.rb as test.txt
 function s:MySpaceBeforeSave()
-    if exists('b:myspace_roundtrip') && b:myspace_roundtrip == v:false
-        return
-    elseif exists('b:myspace_disable') && b:myspace_disable == v:true
+    if s:IsDisabled()
         return
     endif
 
@@ -92,9 +97,7 @@ endfunction
 " after saving a file, undo the substitution so it doesn't
 " clutter the undo stack
 function s:MySpaceAfterSave()
-    if exists('b:myspace_roundtrip') && b:myspace_roundtrip == v:false
-        return
-    elseif exists('b:myspace_disable') && b:myspace_disable == v:true
+    if s:IsDisabled()
         return
     endif
 

@@ -14,13 +14,14 @@ Four spaces good, two spaces bad!
 - [DESCRIPTION](#description)
   - [Why?](#why)
 - [SETTINGS](#settings)
-  - [g:myspace_filetype](#gmyspace_filetype)
+  - [myspace_filetype](#myspace_filetype)
+  - [myspace_disable](#myspace_disable)
+- [TIPS & TRICKS](#tips--tricks)
+  - [Auto-Indentation](#auto-indentation)
+  - [Project-Specific Settings](#project-specific-settings)
 - [CAVEATS](#caveats)
   - [Tabs](#tabs)
-  - [Auto-Indentation](#auto-indentation)
   - [Preformatted Sections](#preformatted-sections)
-    - [before](#before)
-    - [after](#after)
 - [FAQ](#faq)
   - [I prefer 2 spaces. Can I use this plugin to view/edit 4-space files with 2 spaces?](#i-prefer-2-spaces-can-i-use-this-plugin-to-viewedit-4-space-files-with-2-spaces)
 - [SEE ALSO](#see-also)
@@ -51,8 +52,7 @@ Add `Plugin 'chocolateboy/vim-myspace'` to your `~/.vimrc` and run `PluginInstal
 # SYNOPSIS
 
 ```vim
-" safely view and edit these 2-spaced filetypes (community standard)
-" with 4 spaces (my preference)
+" safely view and edit these 2-spaced filetypes (community standard) with 4 spaces (my preference)
 let g:myspace_filetype = { 'crystal|ruby|scala|swift': [2, 4] }
 ```
 
@@ -79,13 +79,21 @@ stipulated by a project, workplace, community etc.
 
 # SETTINGS
 
-## g:myspace_filetype
+## myspace_filetype
 
-The plugin is enabled by assigning a dictionary of mappings to this variable in
-your `~/.vimrc`. The dictionary's keys are filetypes (strings) and its values
-are `from` → `to` pairs (arrays). Indentations spanning multiple `from` spaces
-are translated to the corresponding number of `to` spaces. Remainders are passed
-through unchanged in both directions, e.g. for 2 → 4:
+The plugin is configured by assigning a dictionary of mappings to `g:myspace_filetype`
+(global) or `b:myspace_filetype` (buffer-local) e.g. in `~/.vimrc`:
+
+```vim
+let g:myspace_filetype = { 'crystal|ruby|scala|swift': [2, 4] }
+```
+
+If defined, the buffer-local mappings take precedence over the global mappings.
+
+The dictionary's keys are filetypes (strings) and its values are either `from` → `to`
+pairs (arrays) or false (0) to disable rewriting for the type(s). Indentations spanning
+multiple `from` spaces are translated to the corresponding number of `to` spaces.
+Remainders are passed through unchanged, e.g. for 2 → 4:
 
 | from  | to    | back |
 | ----- | ----- | ---: |
@@ -105,8 +113,8 @@ let g:myspace_filetype = {
     \ }
 ```
 
-Or, if multiple filetypes share the same rewrite rule, they can be specified together, separated by
-a pipe character:
+Or, if multiple filetypes share the same rewrite rule, they can be specified together,
+separated by a pipe character:
 
 ```vim
 let g:myspace_filetype = {
@@ -115,12 +123,16 @@ let g:myspace_filetype = {
     \ }
 ```
 
-# CAVEATS
+## myspace_disable
 
-## Tabs
+The plugin can be disabled by setting `g:myspace_disable` (global) or `b:myspace_disable` (buffer-local)
+to true (1) e.g.:
 
-The plugin only operates on lines that begin with spaces. Lines that begin with tabs are unaffected.
-Lines that begin with spaces followed by one or more tabs are only transformed up to the tab(s).
+```vim
+let b:myspace_disable = 1
+```
+
+# TIPS & TRICKS
 
 ## Auto-Indentation
 
@@ -135,12 +147,63 @@ set softtabstop=4
 set tabstop=8
 ```
 
+## Project-Specific Settings
+
+Indentation can be configured on a per-project basis by defining
+[directory-specific autocommands](https://til.hashrocket.com/posts/720a6a05f9-matching-on-directories-for-vims-autocmd),
+which either:
+
+* (re-)define a mapping:
+
+    ```vim
+    autocmd BufNewFile,BufRead ~/build/example/*.js let b:myspace_filetype = { 'javascript': [2, 4] }
+    ```
+
+* disable rewrites for files that already use your preferred style:
+
+    ```vim
+    autocmd BufNewFile,BufRead ~/build/example/* let b:myspace_disable = 1
+    ```
+
+* or a combination of the two:
+
+    ```vim
+    " default settings: expand 2-space CofeeScript to 4 spaces
+    let g:myspace_filetype = { 'coffee': [2, 4] }
+
+    " custom settings for a project with 2-space JavaScript (expand) and 4-space
+    " CoffeeScript (preserve)
+    autocmd BufNewFile,BufRead ~/build/example/* let b:myspace_filetype = { 'javascript': [2, 4], 'coffee': 0 }
+    ```
+
+Since overrides are typically buffer-local, they can be sourced from
+a (shared) file without affecting the global settings e.g:
+
+> `~/.vim/local/myspace-js24.vim`
+
+```bash
+let b:myspace_filetype = { 'javascript': [2, 4] }
+```
+
+> `~/.vimrc`
+
+```vim
+autocmd BufNewFile,BufRead ~/code/example/*.js source ~/.vim/local/myspace-js24.vim
+```
+
+# CAVEATS
+
+## Tabs
+
+The plugin only operates on lines that begin with spaces. Lines that begin with tabs are unaffected.
+Lines that begin with spaces followed by one or more tabs are only transformed up to the tab(s).
+
 ## Preformatted Sections
 
 The transform may occasionally affect indentation on lines that are already correctly indented
 such as the bodies of multi-line comments or heredocs e.g.:
 
-### before
+**before**
 
 ```ruby
 code = <<EOS # four spaces
@@ -152,7 +215,7 @@ class Foo {
 EOS
 ```
 
-### after
+**after**
 
 ```ruby
 code = <<EOS # eight spaces
