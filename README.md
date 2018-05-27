@@ -160,7 +160,7 @@ which either:
     let g:myspace_filetype = { 'coffee': [2, 4] }
 
     " custom settings for a project with 2-space JavaScript (expand) and 4-space
-    " CoffeeScript (preserve)
+    " CoffeeScript (no change)
     autocmd BufNewFile,BufRead ~/build/example/* let b:myspace_filetype = { 'javascript': [2, 4], 'coffee': 0 }
     ```
 

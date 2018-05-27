@@ -17,8 +17,8 @@ if !exists('g:myspace_disable')
     let g:myspace_disable = v:false
 endif
 
-" return a truthy value if this plugin is disabled in the current buffer
-" or globally, or a falsey value otherwise
+" return true if this plugin is disabled in the current buffer
+" or globally; otherwise, return false
 function s:IsDisabled()
     return exists('b:myspace_disable') ? b:myspace_disable : g:myspace_disable
 endfunction
