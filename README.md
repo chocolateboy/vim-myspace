@@ -156,7 +156,7 @@ which either:
 * or a combination of the two:
 
     ```vim
-    " default settings: expand 2-space CofeeScript to 4 spaces
+    " default settings: expand 2-space CoffeeScript to 4 spaces
     let g:myspace_filetype = { 'coffee': [2, 4] }
 
     " custom settings for a project with 2-space JavaScript (expand) and 4-space
