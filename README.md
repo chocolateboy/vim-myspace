@@ -93,8 +93,10 @@ let g:myspace_filetype = { 'crystal|ruby|scala|swift': [2, 4] }
 
 The dictionary's keys are filetypes (strings) and its values are either `from` → `to`
 pairs (arrays), or false (0) to disable rewriting for the type(s). Indentations spanning
-multiple `from` spaces are translated to the corresponding number of `to` spaces.
-Remainders are passed through unchanged, e.g. for 2 → 4:
+multiple `from` spaces are translated to the corresponding number of `to` spaces when
+files with the specified type are loaded, and contracted (`to` → `from`) and
+expanded again (`from` → `to`) before and after the files are saved. Remainders
+are passed through unchanged in both directions, e.g. for 2 → 4:
 
 | from  | to    | back |
 | ----- | ----- | ---: |
