@@ -159,12 +159,12 @@ which either:
 * or a combination of the two:
 
     ```vim
-    " default settings: expand 2-space CoffeeScript to 4 spaces
-    let g:myspace_filetype = { 'coffee': [2, 4] }
+    " default settings: expand 2-space TypeScript to 4 spaces
+    let g:myspace_filetype = { 'typescript': [2, 4] }
 
     " custom settings for a project with 2-space JavaScript (expand) and 4-space
-    " CoffeeScript (no change)
-    autocmd BufNewFile,BufRead ~/build/example/* let b:myspace_filetype = { 'javascript': [2, 4], 'coffee': 0 }
+    " TypeScript (no change)
+    autocmd BufNewFile,BufRead ~/build/example/* let b:myspace_filetype = { 'javascript': [2, 4], 'typescript': 0 }
     ```
 
 Since overrides are typically buffer-local, they can be sourced from
