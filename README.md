@@ -33,7 +33,7 @@ Four spaces good, two spaces bad!
 
 # NAME
 
-vim-myspace - safely view and edit files with your preferred spacing style
+vim-myspace - safely view and edit files with your preferred indentation style
 
 # INSTALLATION
 
@@ -144,7 +144,7 @@ Indentation can be configured on a per-project basis by defining
 [directory-specific autocommands](https://til.hashrocket.com/posts/720a6a05f9-matching-on-directories-for-vims-autocmd),
 which either:
 
-* (re-)define a mapping:
+* (re-)define mappings:
 
     ```vim
     autocmd BufNewFile,BufRead ~/build/example/*.js let b:myspace_filetype = { 'javascript': [2, 4] }
