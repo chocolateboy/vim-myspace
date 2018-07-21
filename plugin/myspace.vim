@@ -64,7 +64,7 @@ function s:Lookup(lang)
     return [v:false, 0, 0]
 endfunction
 
-" after loading a file, rewrite the community standard to our preferred spacing
+" after loading a file, rewrite the community standard to our preferred indentation
 function s:MySpaceAfterLoad()
     if s:IsDisabled()
         return
@@ -79,7 +79,7 @@ function s:MySpaceAfterLoad()
     endif
 endfunction
 
-" before saving a file, rewrite our spacing to the community standard
+" before saving a file, rewrite our indentation to the community standard
 function s:MySpaceBeforeSave()
     if s:IsDisabled()
         return
