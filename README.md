@@ -189,10 +189,25 @@ Automatic indentation (i.e. while typing) works as expected for me with the foll
 
 ```vim
 set autoindent
-set noexpandtab
 set shiftwidth=4
 set softtabstop=4
 set tabstop=8
+```
+
+In addition, you may need to add overrides for core and third-party filetype plugins
+which impose an indentation style:
+
+```vim
+" override the 2-space indentation imposed by vim-ruby
+" https://github.com/vim-ruby/vim-ruby/issues/234
+autocmd FileType ruby :setlocal expandtab shiftwidth=4 tabstop=4
+```
+
+Alternatively, it may be possible to toggle a plugin's indentation settings on/off via a variable e.g.:
+
+```vim
+" disable the 2-space indentation imposed by vim-ruby's filetype plugin
+let g:ruby_recommended_style = 0
 ```
 
 # CAVEATS
