@@ -51,9 +51,7 @@ function s:Lookup(lang)
 
             if spec != v:false
                 echohl WarningMsg
-                echomsg 'vim-myspace: invalid spec for '
-                    \ . string(key)
-                    \ . ': expected false (0) or [from: int > 0, to: int > 0], got: ' . string(spec)
+                echomsg 'vim-myspace: invalid spec for ' . string(key) . ': expected false (0) or [from: int > 0, to: int > 0], got: ' . string(spec)
                 echohl None
             endif
 
