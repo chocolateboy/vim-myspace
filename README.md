@@ -85,11 +85,8 @@ The plugin is configured by assigning a dictionary of mappings to `g:myspace_fil
 (global) or `b:myspace_filetype` (buffer-local). If defined, the buffer-local mappings
 take precedence over the global mappings.
 
-```sh
-$ cat ~/.vimrc
-```
-
 ```vim
+" ~/.vimrc
 let g:myspace_filetype = { 'crystal|ruby|scala|swift': [2, 4] }
 ```
 
@@ -172,19 +169,13 @@ which either:
 Since overrides are typically buffer-local, they can be sourced from
 a (shared) file without affecting the global settings e.g:
 
-```sh
-$ cat ~/.vim/local/indent-js-24.vim
-```
-
-```bash
+```vim
+" ~/.vim/local/indent-js-24.vim
 let b:myspace_filetype = { 'javascript': [2, 4] }
 ```
 
-```sh
-$ cat ~/.vimrc
-```
-
 ```vim
+" ~/.vimrc
 autocmd BufNewFile,BufRead ~/code/example/*.js source ~/.vim/local/indent-js-24.vim
 ```
 
@@ -321,7 +312,7 @@ are mapped to multiples of `to`. The same is not always true if `from` >
 
 # COPYRIGHT AND LICENSE
 
-Copyright © 2016-2018 by chocolateboy
+Copyright © 2016-2019 by chocolateboy
 
 vim-myspace is free software; you can redistribute it and/or modify it under the
 terms of the [Artistic License 2.0](http://www.opensource.org/licenses/artistic-license-2.0.php).
