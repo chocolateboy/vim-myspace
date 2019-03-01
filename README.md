@@ -1,7 +1,5 @@
 # vim-myspace
 
-Four spaces good, two spaces bad!
-
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -33,7 +31,7 @@ Four spaces good, two spaces bad!
 
 # NAME
 
-vim-myspace - safely view and edit files with your preferred indentation style
+vim-myspace - safely view and edit files with your preferred indentation size
 
 # INSTALLATION
 
@@ -59,8 +57,8 @@ let g:myspace_filetype = { 'crystal|ruby|scala|swift': [2, 4] }
 # DESCRIPTION
 
 vim-myspace is a vim plugin which allows files to be viewed and edited with your preferred
-indentation style (e.g. 4 spaces) but transparently saved with the default/community-standard
-style (e.g. 2 spaces).
+indentation size (e.g. 4 spaces) but transparently saved with the default/community-standard
+size (e.g. 2 spaces).
 
 ## Why?
 
@@ -192,7 +190,7 @@ set tabstop=8
 ```
 
 In addition, you may need to add overrides for core and third-party filetype plugins
-which impose an indentation style:
+which impose an indentation size:
 
 ```vim
 " override the 2-space indentation imposed by vim-ruby
