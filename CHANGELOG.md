@@ -1,3 +1,7 @@
+## 0.2.0 - 2019-09-30
+
+- don't silence errors when performing the BufReadPost substitution
+
 ## 0.1.3 - 2018-08-05
 
 - document how to override ftplugin-imposed indentation settings

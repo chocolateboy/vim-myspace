@@ -72,7 +72,7 @@ function s:MySpaceAfterLoad()
 
     if match
         let save_view = winsaveview()
-        silent! %substitute/\v^( +)/\=s:Replace(submatch(0), from, to)/e
+        silent %substitute/\v^( +)/\=s:Replace(submatch(0), from, to)/e
         call winrestview(save_view)
     endif
 endfunction

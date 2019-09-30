@@ -1,7 +1,6 @@
 # vim-myspace
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+<!-- toc -->
 
 - [NAME](#name)
 - [INSTALLATION](#installation)
@@ -27,7 +26,7 @@
 - [AUTHOR](#author)
 - [COPYRIGHT AND LICENSE](#copyright-and-license)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<!-- tocstop -->
 
 # NAME
 
@@ -302,7 +301,7 @@ are mapped to multiples of `to`. The same is not always true if `from` >
 
 # VERSION
 
-0.1.3
+0.2.0
 
 # AUTHOR
 
