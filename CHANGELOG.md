@@ -1,3 +1,7 @@
+## 0.2.1 - TBD
+
+- don't silence errors when performing the BufWritePre substitution
+
 ## 0.2.0 - 2019-09-30
 
 - don't silence errors when performing the BufReadPost substitution

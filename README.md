@@ -102,7 +102,7 @@ for 2 → 4:
 | 4     | 8     | 4    |
 | 5     | 9     | 5    |
 
-The mapping from filetypes to `from`/`to` pairs can be specified individually e.g.:
+The mapping from filetypes to `from`/`to` pairs can be specified individually, e.g.:
 
 ```vim
 let g:myspace_filetype = {
@@ -126,7 +126,7 @@ let g:myspace_filetype = {
 ## myspace_disable
 
 The plugin can be disabled by setting `g:myspace_disable` (global) or `b:myspace_disable` (buffer-local)
-to true (1) e.g.:
+to true (1), e.g.:
 
 ```vim
 let b:myspace_disable = 1
@@ -160,7 +160,10 @@ which either:
 
     " custom settings for a project with 2-space JavaScript (expand) and 4-space
     " TypeScript (no change)
-    autocmd BufNewFile,BufRead ~/build/example/* let b:myspace_filetype = { 'javascript': [2, 4], 'typescript': 0 }
+    autocmd BufNewFile,BufRead ~/build/example/* let b:myspace_filetype = {
+        \ 'javascript': [2, 4],
+        \ 'typescript': 0,
+        \ }
     ```
 
 Since overrides are typically buffer-local, they can be sourced from
@@ -197,7 +200,7 @@ which impose an indentation size:
 autocmd FileType ruby :setlocal expandtab shiftwidth=4 tabstop=4
 ```
 
-Alternatively, it may be possible to toggle a plugin's indentation settings on/off via a variable e.g.:
+Alternatively, it may be possible to toggle a plugin's indentation settings on/off via a variable, e.g.:
 
 ```vim
 " disable the 2-space indentation imposed by vim-ruby's filetype plugin
@@ -214,7 +217,7 @@ Lines that begin with spaces followed by one or more tabs are only transformed u
 ## Preformatted Sections
 
 The transform may occasionally affect indentation on lines that are already correctly indented
-such as the bodies of multi-line comments or heredocs e.g.:
+such as the bodies of multi-line comments or heredocs, e.g.:
 
 **before**
 
@@ -244,7 +247,7 @@ EOS
 
 ## I prefer 2 spaces. Can I use this plugin to view/edit 4-space files with 2 spaces?
 
-Yes and no. While well-formed indents can correctly be roundtripped e.g. for 4 → 2:
+Yes and no. While well-formed indents can correctly be roundtripped, e.g. for 4 → 2:
 
 | from   | to   | back   |
 | -----: | ---: | -----: |
@@ -253,7 +256,7 @@ Yes and no. While well-formed indents can correctly be roundtripped e.g. for 4 �
 | 12     | 6    | 12     |
 | 16     | 8    | 16     |
 
-\- real-world code contains ill-formed indents e.g. 4-spaced files with lines that
+\- real-world code contains ill-formed indents, e.g. 4-spaced files with lines that
 begin with, say, 6 spaces:
 
 ```cpp
@@ -283,7 +286,7 @@ begin with, say, 6 spaces:
 Expansion is always reversible i.e. if `from` <= `to`, there is no loss of
 information about the original number of spaces when multiples of `from`
 are mapped to multiples of `to`. The same is not always true if `from` >
-`to` e.g. for 4 → 2:
+`to`, e.g. for 4 → 2:
 
 | from   | to   | back   |
 | -----: | ---: | -----: |
@@ -294,7 +297,7 @@ are mapped to multiples of `to`. The same is not always true if `from` >
 
 # SEE ALSO
 
-* [AutoAdapt](http://www.vim.org/scripts/script.php?script_id=4654) - automatically update timestamps, copyright notices, etc.
+* [AutoAdapt](https://www.vim.org/scripts/script.php?script_id=4654) - automatically update timestamps, copyright notices, etc.
 * [detectindent](https://github.com/ciaranm/detectindent) - vim script for automatically detecting indent settings
 * [GitHub: better-sized tabs in code](https://userstyles.org/styles/70979/github-better-sized-tabs-in-code) - a userstyle which displays tabs on GitHub as 4 spaces rather than 8
 * [sleuth.vim](https://github.com/tpope/vim-sleuth) - heuristically set indentation options
@@ -309,7 +312,7 @@ are mapped to multiples of `to`. The same is not always true if `from` >
 
 # COPYRIGHT AND LICENSE
 
-Copyright © 2016-2019 by chocolateboy
+Copyright © 2016-2020 by chocolateboy
 
 vim-myspace is free software; you can redistribute it and/or modify it under the
-terms of the [Artistic License 2.0](http://www.opensource.org/licenses/artistic-license-2.0.php).
+terms of the [Artistic License 2.0](https://www.opensource.org/licenses/artistic-license-2.0.php).

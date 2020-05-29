@@ -1,6 +1,6 @@
 " XXX probably doesn't work with folds
 " TODO investigate removing the search pattern from history as per this SO answer:
-" see: http://stackoverflow.com/a/23650554
+" see: https://stackoverflow.com/a/23650554
 " TODO add tests
 
 if exists('g:myspace_loaded')
@@ -87,7 +87,7 @@ function s:MySpaceBeforeSave()
 
     if match
         let save_view = winsaveview()
-        silent! %substitute/\v^( +)/\=s:Replace(submatch(0), to, from)/e
+        silent %substitute/\v^( +)/\=s:Replace(submatch(0), to, from)/e
         call winrestview(save_view)
     endif
 endfunction
