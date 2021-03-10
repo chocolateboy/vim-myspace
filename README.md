@@ -90,7 +90,7 @@ let g:myspace_filetype = { 'crystal|ruby|scala|swift': [2, 4] }
 The dictionary's keys are [filetypes](http://vimdoc.sourceforge.net/htmldoc/filetype.html)
 (strings) and its values are either `from` → `to` pairs (arrays), or false (0) to disable
 rewriting for the type(s). Indentations spanning multiple `from` spaces are translated
-to the corresponding number of `to` spaces when files with the specified type are loaded,
+to the corresponding number of `to` spaces when files of the specified type are loaded,
 and are unmapped (`to` → `from`) and remapped (`from` → `to`) before and after the
 files are saved. Remainders are passed through unchanged in both directions, e.g.
 for 2 → 4:
@@ -283,7 +283,7 @@ begin with, say, 6 spaces:
      */                   // 5
 ```
 
-Expansion is always reversible i.e. if `from` <= `to`, there is no loss of
+Expansion is always reversible, i.e. if `from` <= `to`, there is no loss of
 information about the original number of spaces when multiples of `from`
 are mapped to multiples of `to`. The same is not always true if `from` >
 `to`, e.g. for 4 → 2:
