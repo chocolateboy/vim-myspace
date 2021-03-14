@@ -1,3 +1,7 @@
+## 0.3.0 - TBD
+
+- relicense: Artistic 2.0 -> MIT
+
 ## 0.2.1 - 2020-05-30
 
 - don't silence errors when performing the BufWritePre substitution
