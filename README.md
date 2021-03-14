@@ -304,7 +304,7 @@ are mapped to multiples of `to`. The same is not always true if `from` >
 
 # VERSION
 
-0.2.1
+0.3.0
 
 # AUTHOR
 
