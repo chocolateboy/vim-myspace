@@ -312,7 +312,7 @@ are mapped to multiples of `to`. The same is not always true if `from` >
 
 # COPYRIGHT AND LICENSE
 
-Copyright © 2016-2020 by chocolateboy
+Copyright © 2016-2021 by chocolateboy
 
-vim-myspace is free software; you can redistribute it and/or modify it under the
-terms of the [Artistic License 2.0](https://www.opensource.org/licenses/artistic-license-2.0.php).
+This is free software; you can redistribute it and/or modify it under the terms
+of the [MIT license](https://opensource.org/licenses/MIT).
