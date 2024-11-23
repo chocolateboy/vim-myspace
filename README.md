@@ -167,7 +167,7 @@ which either:
     ```
 
 Since overrides are typically buffer-local, they can be sourced from
-a (shared) file without affecting the global settings e.g:
+a (shared) file without affecting the global settings, e.g.:
 
 ```vim
 " ~/.vim/local/indent-js-24.vim
