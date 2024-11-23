@@ -304,7 +304,7 @@ are mapped to multiples of `to`. The same is not always true if `from` >
 
 # VERSION
 
-0.3.0
+1.0.0
 
 # AUTHOR
 
@@ -312,7 +312,7 @@ are mapped to multiples of `to`. The same is not always true if `from` >
 
 # COPYRIGHT AND LICENSE
 
-Copyright © 2016-2021 by chocolateboy
+Copyright © 2016-2024 by chocolateboy
 
 This is free software; you can redistribute it and/or modify it under the terms
 of the [MIT license](https://opensource.org/licenses/MIT).

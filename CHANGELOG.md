@@ -1,4 +1,4 @@
-## 1.0.0 - TBD
+## 1.0.0 - 2024-11-23
 
 - fix handling of files with no indented lines
 - fix cursor-position restoration
