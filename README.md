@@ -299,7 +299,6 @@ are mapped to multiples of `to`. The same is not always true if `from` >
 
 * [AutoAdapt](https://www.vim.org/scripts/script.php?script_id=4654) - automatically update timestamps, copyright notices, etc.
 * [detectindent](https://github.com/ciaranm/detectindent) - vim script for automatically detecting indent settings
-* [GitHub: better-sized tabs in code](https://userstyles.org/styles/70979/github-better-sized-tabs-in-code) - a userstyle which displays tabs on GitHub as 4 spaces rather than 8
 * [sleuth.vim](https://github.com/tpope/vim-sleuth) - heuristically set indentation options
 
 # VERSION

@@ -73,7 +73,7 @@ function s:MySpaceAfterLoad()
     endif
 
     let save_view = winsaveview()
-    silent keeppattern %substitute/\v^( +)/\=s:Replace(submatch(0), from, to)/e
+    silent keeppatterns %substitute/\v^( +)/\=s:Replace(submatch(0), from, to)/e
     call winrestview(save_view)
 endfunction
 
@@ -89,10 +89,18 @@ function s:MySpaceBeforeSave()
         return
     endif
 
-    " snapshot state to be checked or restored after the save
-    let b:myspace_changedtick = b:changedtick
+    " snapshot the window state (e.g. cursor position) so we can restore it
+    " after saving
     let b:myspace_winsaveview = winsaveview()
-    silent keeppattern %substitute/\v^( +)/\=s:Replace(submatch(0), to, from)/e
+
+    " we need to make sure the file is actually modified (unindented) here
+    " before restoring the expanded indentation with +undo+ in the post-save
+    " hook. a failed substitution isn't an action to be undone, it's an error
+    " (which we suppress), so if there were no indented lines, the change
+    " count will be unchanged
+    let old_changedtick = b:changedtick
+    silent keeppatterns %substitute/\v^( +)/\=s:Replace(submatch(0), to, from)/e
+    let b:myspace_undo = b:changedtick > old_changedtick
 endfunction
 
 " after saving a file, undo the substitution so it doesn't
@@ -108,18 +116,10 @@ function s:MySpaceAfterSave()
         return
     endif
 
-    " we need to make sure the file was actually modified (unindented) here
-    " before restoring the expanded indentation with +undo+. a failed
-    " substitution isn't an action to be undone, it's an error (which we
-    " suppress), so if there were no indented lines, +undo+ will undo the user's
-    " previous action rather than our (nonexistent) indentation change. on a
-    " successful rewrite, the change counter should be the old/saved count +
-    " 2: 1 for the (successful) substitution and 1 for the write of a modified
-    " file. if the file was changed without causing any indentation changes,
-    " the counter will only have gone up by 1 (for the modified-file write)
-    let want_ticks = b:myspace_changedtick + 2
-
-    if b:changedtick >= want_ticks
+    " XXX this undo assumes our indentation change was the last change before
+    " the file was saved, which may not be the case if another plugin is used,
+    " e.g. a date-transclusion plugin such as AutoAdapt
+    if b:myspace_undo
         silent normal! u
         call winrestview(b:myspace_winsaveview)
     endif

@@ -1,3 +1,7 @@
+## 1.0.1 - TBD
+
+- improve change detection
+
 ## 1.0.0 - 2024-11-23
 
 - fix handling of files with no indented lines
