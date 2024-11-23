@@ -1,4 +1,4 @@
-## 1.0.1 - TBD
+## 1.0.1 - 2024-11-23
 
 - improve change detection
 
