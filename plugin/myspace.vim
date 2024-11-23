@@ -1,8 +1,3 @@
-" XXX probably doesn't work with folds
-" TODO investigate removing the search pattern from history as per this SO answer:
-" see: https://stackoverflow.com/a/23650554
-" TODO add tests
-
 if exists('g:myspace_loaded')
     finish
 end
@@ -51,7 +46,10 @@ function s:Lookup(lang)
 
             if spec != v:false
                 echohl WarningMsg
-                echomsg 'vim-myspace: invalid spec for ' . string(key) . ': expected false (0) or [from: int > 0, to: int > 0], got: ' . string(spec)
+                echomsg 'vim-myspace: invalid spec for ' .
+                    string(key) .
+                    ': expected false (0) or [from: int > 0, to: int > 0], got: ' .
+                    string(spec)
                 echohl None
             endif
 
@@ -70,11 +68,13 @@ function s:MySpaceAfterLoad()
 
     let [match, from, to] = s:Lookup(&filetype)
 
-    if match
-        let save_view = winsaveview()
-        silent %substitute/\v^( +)/\=s:Replace(submatch(0), from, to)/e
-        call winrestview(save_view)
+    if !match
+        return
     endif
+
+    let save_view = winsaveview()
+    silent keeppattern %substitute/\v^( +)/\=s:Replace(submatch(0), from, to)/e
+    call winrestview(save_view)
 endfunction
 
 " before saving a file, rewrite our indentation to the community standard
@@ -85,11 +85,14 @@ function s:MySpaceBeforeSave()
 
     let [match, from, to] = s:Lookup(&filetype)
 
-    if match
-        let save_view = winsaveview()
-        silent %substitute/\v^( +)/\=s:Replace(submatch(0), to, from)/e
-        call winrestview(save_view)
+    if !match
+        return
     endif
+
+    " snapshot state to be checked or restored after the save
+    let b:myspace_changedtick = b:changedtick
+    let b:myspace_winsaveview = winsaveview()
+    silent keeppattern %substitute/\v^( +)/\=s:Replace(submatch(0), to, from)/e
 endfunction
 
 " after saving a file, undo the substitution so it doesn't
@@ -101,10 +104,24 @@ function s:MySpaceAfterSave()
 
     let [match, from, to] = s:Lookup(&filetype)
 
-    if match
-        let save_view = winsaveview()
+    if !match
+        return
+    endif
+
+    " we need to make sure the file was actually modified (unindented) here
+    " before restoring the expanded indentation with +undo+. a failed
+    " substitution isn't an action to be undone, it's an error (which we
+    " suppress), so if there were no indented lines, +undo+ will undo the user's
+    " previous action rather than our (nonexistent) indentation change. on a
+    " successful rewrite, the change counter should be the old/saved count +
+    " 2: 1 for the (successful) substitution and 1 for the write of a modified
+    " file. if the file was changed without causing any indentation changes,
+    " the counter will only have gone up by 1 (for the modified-file write)
+    let want_ticks = b:myspace_changedtick + 2
+
+    if b:changedtick >= want_ticks
         silent normal! u
-        call winrestview(save_view)
+        call winrestview(b:myspace_winsaveview)
     endif
 endfunction
 

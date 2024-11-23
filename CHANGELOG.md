@@ -1,3 +1,10 @@
+## 1.0.0 - TBD
+
+- fix handling of files with no indented lines
+- fix cursor-position restoration
+- don't clutter the search history with the indentation replacement
+  pattern
+
 ## 0.3.0 - 2021-03-14
 
 - relicense: Artistic 2.0 -> MIT
